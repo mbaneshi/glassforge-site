@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GlassForge — iOS 26 Readiness Scanner</title>
-    <meta name="description" content="How ready is your iOS app for iOS 26 and Liquid Glass? GlassForge scans your codebase and gives you a readiness score in seconds.">
+    <title>GlassForge — AI-Powered iOS Modernization Platform</title>
+    <meta name="description" content="Scan, plan, execute, and verify your iOS 26 / Liquid Glass migration. One platform powered by AI agents.">
     <style>
         :root {
             --bg: #0a0a0a;
@@ -338,9 +338,9 @@
 
 <section class="hero">
     <div class="container">
-        <span class="badge">Open Source CLI</span>
-        <h1>How ready is your app for iOS 26?</h1>
-        <p class="subtitle">GlassForge scans your iOS codebase and gives you a Liquid Glass readiness score in seconds. Deterministic. No cloud. No AI. Just facts.</p>
+        <span class="badge">Open Source Platform</span>
+        <h1>iOS 26 modernization, end to end</h1>
+        <p class="subtitle">Scan your codebase for readiness. Plan the migration. Execute with AI agents. Verify the result. One platform — Rust + Swift + AI.</p>
 
         <div class="terminal">
             <div class="terminal-header">
@@ -361,7 +361,7 @@
         </div>
 
         <div class="cta-group">
-            <a href="https://github.com/mbaneshi/glassforge" class="btn btn-primary">
+            <a href="https://github.com/glassforge-ai/glassforge" class="btn btn-primary">
                 View on GitHub
             </a>
             <a href="#get-assessment" class="btn btn-secondary">
@@ -373,31 +373,51 @@
 
 <section class="features">
     <div class="container">
-        <h2>What GlassForge detects</h2>
+        <h2>Four stages. One platform.</h2>
+        <div class="feature-grid">
+            <div class="feature" style="grid-column: 1 / -1;">
+                <h3>1. Scan</h3>
+                <p>Swift CLI analyzes your codebase: readiness score (0-100), deprecated APIs with replacements, Liquid Glass signals, 150+ dependency migration rules, layout risks. Deterministic. Runs locally. CI-friendly with <code>--fail-under</code>.</p>
+            </div>
+            <div class="feature" style="grid-column: 1 / -1;">
+                <h3>2. Plan</h3>
+                <p>AI agents generate a prioritized migration roadmap from your scan results. Phased approach: critical fixes first, then UI modernization, then Liquid Glass adoption. Guided by Apple's Human Interface Guidelines.</p>
+            </div>
+            <div class="feature" style="grid-column: 1 / -1;">
+                <h3>3. Execute</h3>
+                <p>Multi-agent Rust orchestrator runs parallel code migrations. 112 specialized AI personas. Safety controls: circuit breaker, budget enforcement, quality gates, loop detection. Each agent works in an isolated git worktree. Real-time streaming output.</p>
+            </div>
+            <div class="feature" style="grid-column: 1 / -1;">
+                <h3>4. Learn</h3>
+                <p>Gamified codebase exploration with AI-generated chapters, 3D dependency graphs, quizzes, and XP tracking. Your team understands the modernized code — not just the diff. Parses 12 languages via tree-sitter.</p>
+            </div>
+        </div>
+
+        <h2 style="margin-top: 60px;">Under the hood</h2>
         <div class="feature-grid">
             <div class="feature">
-                <h3>UI Stack Analysis</h3>
-                <p>UIKit vs SwiftUI file counts, storyboard/XIB inventory, and Liquid Glass design signals.</p>
+                <h3>23 Rust Crates</h3>
+                <p>Single binary. Axum + SQLite + Tokio. Agent orchestration, codebase analysis, graph algorithms, gamified learning — all compiled into one.</p>
             </div>
             <div class="feature">
-                <h3>Deprecated API Detection</h3>
-                <p>Pattern-based scanning against versioned iOS 26 rules. Every finding includes a replacement suggestion.</p>
+                <h3>Swift Scanner</h3>
+                <p>Standalone CLI with 150+ dependency rules, 24+ deprecated API patterns, Liquid Glass analyzer, and 7-category weighted scoring.</p>
             </div>
             <div class="feature">
-                <h3>Dependency Risk Scoring</h3>
-                <p>CocoaPods to SPM migration mapping with difficulty ratings and risk scores per dependency.</p>
+                <h3>112 AI Personas</h3>
+                <p>Pre-built agent roles across 11 divisions: engineering, design, testing, security, spatial computing, and more. Each with full system prompts and methodologies.</p>
             </div>
             <div class="feature">
-                <h3>Objective-C Footprint</h3>
-                <p>Mixed-module detection, bridging header analysis, and ObjC-to-Swift migration surface estimation.</p>
+                <h3>36 MCP Tools</h3>
+                <p>Model Context Protocol server for programmatic control. Agent management, codebase queries, impact analysis, governance, analytics — all via MCP.</p>
             </div>
             <div class="feature">
-                <h3>Layout Risk Signals</h3>
-                <p>Hard-coded frames, fixed constants, and patterns that won't adapt to Liquid Glass dynamic layouts.</p>
+                <h3>Safety-First Execution</h3>
+                <p>Circuit breaker, rate limiter, cost tracker, loop detector, quality gates, exit gates. Every agent runs in an isolated git worktree.</p>
             </div>
             <div class="feature">
-                <h3>CI-Friendly Output</h3>
-                <p>JSON artifacts for automation. Use <code>--fail-under</code> as a gate in your CI pipeline.</p>
+                <h3>SvelteKit 5 Dashboard</h3>
+                <p>Unified web UI embedded in the binary. Scanner results, agent sessions, 3D graph explorer, learning paths, org charts, analytics — zero setup.</p>
             </div>
         </div>
     </div>
@@ -450,7 +470,7 @@
             <a href="mailto:baneshi@gmail.com?subject=GlassForge%20Assessment" class="btn btn-secondary">
                 Email
             </a>
-            <a href="https://github.com/mbaneshi/glassforge" class="btn btn-secondary">
+            <a href="https://github.com/glassforge-ai/glassforge" class="btn btn-secondary">
                 Run it yourself
             </a>
         </div>
@@ -477,9 +497,9 @@
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M7.42 10.05c-.18-.16-.46-.23-.84-.23H6v4.36h.58c.37 0 .67-.08.87-.25.21-.18.31-.48.31-.95v-1.9c0-.47-.1-.77-.34-.95v-.08zM0 4.94v14.12h24V4.94H0zM8.56 15.3c-.44.58-1.06.77-2.53.77H4.71V8.53h1.4c1.67 0 2.16.18 2.6.9.27.43.29.6.29 2.82 0 2.42 0 2.6-.44 3.05zm5.02-5.69H10.5v2.17h2.07v1.19H10.5v2.17h3.08v1.19H9.42V8.42h4.16v1.19zm6.83 5.95c-.27.65-.76 1.03-1.38 1.03-.65 0-1.15-.37-1.42-1.01-.12-.28-.18-.58-.18-1.4V12.4c0-.76.04-1.22.18-1.53.27-.65.76-1.01 1.42-1.01.65 0 1.12.34 1.39.99.12.28.18.58.18 1.5v1.76c0 .88-.06 1.18-.19 1.49z"/></svg>
                 <span>DEV.to</span>
             </a>
-            <a href="https://github.com/mbaneshi" class="social-link" aria-label="GitHub">
+            <a href="https://github.com/glassforge-ai" class="social-link" aria-label="GitHub">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-                <span>GitHub</span>
+                <span>GlassForge AI</span>
             </a>
         </div>
     </div>
