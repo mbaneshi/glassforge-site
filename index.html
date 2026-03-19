@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GlassForge — iOS 26 Readiness Scanner</title>
+    <meta name="description" content="How ready is your iOS app for iOS 26 and Liquid Glass? GlassForge scans your codebase and gives you a readiness score in seconds.">
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --surface: #141414;
+            --border: #262626;
+            --text: #fafafa;
+            --text-muted: #a1a1aa;
+            --accent: #3b82f6;
+            --accent-hover: #60a5fa;
+            --green: #22c55e;
+            --yellow: #eab308;
+            --red: #ef4444;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Hero */
+        .hero {
+            padding: 120px 0 80px;
+            text-align: center;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 100px;
+            font-size: 13px;
+            color: var(--accent);
+            margin-bottom: 24px;
+        }
+
+        h1 {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .subtitle {
+            font-size: 20px;
+            color: var(--text-muted);
+            max-width: 520px;
+            margin: 0 auto 40px;
+        }
+
+        /* Terminal */
+        .terminal {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px 24px;
+            text-align: left;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 14px;
+            margin: 0 auto 48px;
+            max-width: 560px;
+            overflow-x: auto;
+        }
+
+        .terminal-header {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 16px;
+        }
+
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .terminal-dot.red { background: #ff5f57; }
+        .terminal-dot.yellow { background: #febc2e; }
+        .terminal-dot.green { background: #28c840; }
+
+        .terminal .prompt { color: var(--green); }
+        .terminal .cmd { color: var(--text); }
+        .terminal .comment { color: var(--text-muted); }
+        .terminal .output { color: var(--text-muted); margin-top: 8px; }
+        .terminal .score { color: var(--yellow); font-weight: 600; }
+
+        .terminal-line {
+            margin-bottom: 4px;
+            white-space: pre;
+        }
+
+        /* CTA buttons */
+        .cta-group {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.15s;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+        }
+
+        .btn-secondary {
+            background: var(--surface);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--text-muted);
+        }
+
+        /* Features */
+        .features {
+            padding: 60px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .features h2 {
+            font-size: 28px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .feature {
+            padding: 24px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+
+        .feature h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .feature p {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        /* Score example */
+        .score-section {
+            padding: 60px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .score-section h2 {
+            font-size: 28px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+        }
+
+        .score-section .subtitle {
+            margin-bottom: 40px;
+        }
+
+        .score-bar {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            max-width: 480px;
+            margin: 0 auto 16px;
+        }
+
+        .score-label {
+            font-size: 14px;
+            color: var(--text-muted);
+            width: 120px;
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        .score-track {
+            flex: 1;
+            height: 8px;
+            background: var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .score-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s;
+        }
+
+        .score-fill.high { background: var(--green); }
+        .score-fill.mid { background: var(--yellow); }
+        .score-fill.low { background: var(--red); }
+
+        .score-value {
+            font-size: 14px;
+            font-weight: 600;
+            width: 36px;
+            flex-shrink: 0;
+        }
+
+        /* CTA bottom */
+        .bottom-cta {
+            padding: 80px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .bottom-cta h2 {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+        }
+
+        .bottom-cta .subtitle {
+            margin-bottom: 32px;
+        }
+
+        /* Footer */
+        footer {
+            padding: 40px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        footer a {
+            color: var(--text-muted);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: var(--text);
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 32px; }
+            .feature-grid { grid-template-columns: 1fr; }
+            .hero { padding: 80px 0 60px; }
+            .score-label { width: 80px; font-size: 12px; }
+        }
+    </style>
+</head>
+<body>
+
+<section class="hero">
+    <div class="container">
+        <span class="badge">Open Source CLI</span>
+        <h1>How ready is your app for iOS 26?</h1>
+        <p class="subtitle">GlassForge scans your iOS codebase and gives you a Liquid Glass readiness score in seconds. Deterministic. No cloud. No AI. Just facts.</p>
+
+        <div class="terminal">
+            <div class="terminal-header">
+                <div class="terminal-dot red"></div>
+                <div class="terminal-dot yellow"></div>
+                <div class="terminal-dot green"></div>
+            </div>
+            <div class="terminal-line"><span class="prompt">$</span> <span class="cmd">glassforge analyze ./MyApp</span></div>
+            <div class="terminal-line output"></div>
+            <div class="terminal-line output">Scanning 847 files...</div>
+            <div class="terminal-line output">Swift: 312 files (78%)  |  ObjC: 89 files (22%)</div>
+            <div class="terminal-line output">UIKit: 241 files  |  SwiftUI: 71 files</div>
+            <div class="terminal-line output">Storyboards: 18  |  XIBs: 7</div>
+            <div class="terminal-line output">Deprecated APIs: 34 findings</div>
+            <div class="terminal-line output"></div>
+            <div class="terminal-line output">Readiness Score: <span class="score">42 / 100</span></div>
+            <div class="terminal-line output">Artifact: glassforge-artifact.json</div>
+        </div>
+
+        <div class="cta-group">
+            <a href="https://github.com/mbaneshi/glassforge" class="btn btn-primary">
+                View on GitHub
+            </a>
+            <a href="#get-assessment" class="btn btn-secondary">
+                Get a free assessment
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="features">
+    <div class="container">
+        <h2>What GlassForge detects</h2>
+        <div class="feature-grid">
+            <div class="feature">
+                <h3>UI Stack Analysis</h3>
+                <p>UIKit vs SwiftUI file counts, storyboard/XIB inventory, and Liquid Glass design signals.</p>
+            </div>
+            <div class="feature">
+                <h3>Deprecated API Detection</h3>
+                <p>Pattern-based scanning against versioned iOS 26 rules. Every finding includes a replacement suggestion.</p>
+            </div>
+            <div class="feature">
+                <h3>Dependency Risk Scoring</h3>
+                <p>CocoaPods to SPM migration mapping with difficulty ratings and risk scores per dependency.</p>
+            </div>
+            <div class="feature">
+                <h3>Objective-C Footprint</h3>
+                <p>Mixed-module detection, bridging header analysis, and ObjC-to-Swift migration surface estimation.</p>
+            </div>
+            <div class="feature">
+                <h3>Layout Risk Signals</h3>
+                <p>Hard-coded frames, fixed constants, and patterns that won't adapt to Liquid Glass dynamic layouts.</p>
+            </div>
+            <div class="feature">
+                <h3>CI-Friendly Output</h3>
+                <p>JSON artifacts for automation. Use <code>--fail-under</code> as a gate in your CI pipeline.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="score-section">
+    <div class="container">
+        <h2>Know where you stand</h2>
+        <p class="subtitle">The readiness score tells you exactly how much work sits between your app and iOS 26.</p>
+
+        <div class="score-bar">
+            <span class="score-label">SwiftUI adoption</span>
+            <div class="score-track"><div class="score-fill mid" style="width: 29%"></div></div>
+            <span class="score-value">29%</span>
+        </div>
+        <div class="score-bar">
+            <span class="score-label">Deprecated APIs</span>
+            <div class="score-track"><div class="score-fill low" style="width: 34%"></div></div>
+            <span class="score-value">34</span>
+        </div>
+        <div class="score-bar">
+            <span class="score-label">Storyboards</span>
+            <div class="score-track"><div class="score-fill low" style="width: 72%"></div></div>
+            <span class="score-value">18</span>
+        </div>
+        <div class="score-bar">
+            <span class="score-label">Test coverage</span>
+            <div class="score-track"><div class="score-fill high" style="width: 67%"></div></div>
+            <span class="score-value">67%</span>
+        </div>
+        <div class="score-bar">
+            <span class="score-label">Dependency risk</span>
+            <div class="score-track"><div class="score-fill mid" style="width: 45%"></div></div>
+            <span class="score-value">Med</span>
+        </div>
+    </div>
+</section>
+
+<section class="bottom-cta" id="get-assessment">
+    <div class="container">
+        <h2>Need more than a score?</h2>
+        <p class="subtitle">We offer guided iOS 26 modernization: readiness assessment, migration roadmap, and AI-assisted code migration with human review.</p>
+        <div class="cta-group">
+            <a href="mailto:mehdi.baneshi@gmail.com?subject=GlassForge%20Assessment&body=App%20name:%0AEstimated%20codebase%20size:%0ATimeline:" class="btn btn-primary">
+                Request an assessment
+            </a>
+            <a href="https://github.com/mbaneshi/glassforge" class="btn btn-secondary">
+                Run it yourself
+            </a>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <p>GlassForge is open source under the MIT License.</p>
+        <p style="margin-top: 8px;">
+            <a href="https://github.com/mbaneshi/glassforge">GitHub</a>
+            &nbsp;&middot;&nbsp;
+            <a href="https://github.com/mbaneshi/glassforge/issues">Issues</a>
+            &nbsp;&middot;&nbsp;
+            <a href="https://github.com/mbaneshi">mbaneshi</a>
+        </p>
+    </div>
+</footer>
+
+</body>
+</html>
